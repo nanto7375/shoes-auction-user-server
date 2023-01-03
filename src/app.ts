@@ -44,7 +44,7 @@ app.use( router );
 // server on
 app.listen( port , async () => {
   logger.info({ serverStart : `[SERVER] User server start on port ${port}` });
-  // await checkDbConnection();
+  await checkDbConnection();
 });
 
 // Unknown route error

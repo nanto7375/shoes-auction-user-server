@@ -15,9 +15,18 @@ export const resError = ( res: Response, error: any ) => {
   res.status( status ).json({ resultCode, resultMessage });
 };
 
-export const asyncWrapper = ( func ) => async ( req: Request, res: Response, next: NextFunction ) => {
+export const responseWrapper = ( func ) => async ( req: Request, res: Response, next: NextFunction ) => {
   try {
     await func( req, res );
+  } catch ( error ) {
+    next( error );
+  }
+};
+
+export const middleWareWrapper = ( func ) => async ( req: Request, res: Response, next: NextFunction ) => {
+  try {
+    await func();
+    next();
   } catch ( error ) {
     next( error );
   }

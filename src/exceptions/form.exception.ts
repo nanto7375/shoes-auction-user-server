@@ -1,13 +1,15 @@
+import ExceptionAttribute from './attribute.exception';
+
 class ErrorException extends Error {
   status:number;
   resultCode: number;
   resultMessage: string;
 
-  constructor( status: number, resultCode: number, message: string ) {
-    super( message );
+  constructor({ status, resultCode, resultMessage }: ExceptionAttribute ) {
+    super( resultMessage );
     this.status = status;
     this.resultCode = resultCode;
-    this.resultMessage = message;
+    this.resultMessage = resultMessage;
   }
 }
 

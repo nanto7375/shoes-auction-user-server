@@ -48,12 +48,8 @@ app.listen( port , async () => {
 });
 
 // Unknown route error
-app.use( ( req: Request, res: Response ) => {
-  try {
-    throw notFoundRoute;
-  } catch ( error ) {
-    resError( res, error );
-  }
+app.use( ( req: Request, res: Response, next: NextFunction ) => {
+  return next( new ErrorException( notFoundRoute ) );
 });
 
 // celebrate exception
@@ -61,7 +57,7 @@ app.use( ( error: ErrorException, req: Request, res: Response, next: NextFunctio
   if ( !isCelebrateError( error ) ) {
     return next( error );
   }
-  throw badData;
+  throw new ErrorException( badData );
 });
 
 // exception middleware

@@ -1,13 +1,13 @@
-import ExceptionAttribute from './my/my-attribute.exception';
-import MyBasicException from './my/my-basic.exception';
+class ErrorException extends Error {
+  status:number;
+  resultCode: number;
+  resultMessage: string;
 
-class ErrorException extends MyBasicException {
-  constructor( errorAttribute:ExceptionAttribute, message?:string ) {
-    super(
-      errorAttribute.getStatus,
-      errorAttribute.getResultCode,
-      message || errorAttribute.getResultMessage
-    );
+  constructor( status: number, resultCode: number, message: string ) {
+    super( message );
+    this.status = status;
+    this.resultCode = resultCode;
+    this.resultMessage = message;
   }
 }
 

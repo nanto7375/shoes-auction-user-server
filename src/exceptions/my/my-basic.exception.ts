@@ -1,16 +1,16 @@
 class MyBasicException extends Error {
-    status:number
+  status:number;
 
-    resultCode: number
+  resultCode: number;
 
-    resultMessage: string
+  resultMessage: string;
 
-    constructor( status:number, resultCode:number, message:string ) {
-      super( message );
-      this.status = status;
-      this.resultCode = resultCode;
-      this.resultMessage = message;
-    }
+  constructor( status:number, resultCode:number, message:string ) {
+    super( message );
+    this.status = status;
+    this.resultCode = resultCode;
+    this.resultMessage = message;
+  }
 }
 
 export default MyBasicException;

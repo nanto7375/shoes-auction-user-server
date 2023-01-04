@@ -21,11 +21,11 @@ const FetchEx = async ( url: string, options?: Options ) => {
   logger.info({ request: axiosOptions });
   try {
     const res = await axios( axiosOptions );
-    return res.data;
-  } catch ( err ) {
-    logger.error({ stack: err.stack });
-    const { status } = err.response;
-    const { resultCode, resultMessage } = err.response.data;
+    return res.data.resultMessage;
+  } catch ( error ) {
+    logger.error({ stack: error.stack });
+    const { status } = error.response;
+    const { resultCode, resultMessage } = error.response.data;
     throw new ErrorException( new ExceptionAttribute( status, resultCode, resultMessage ) );
   }
 };

@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import logger from '../config/log.config';
+import ErrorException from '../exceptions/form.exception';
+import ExceptionAttribute from '../exceptions/attribute.exception';
 
 interface Options {
     method?: 'POST' | 'GET' | 'PUT' | 'DELETE' | 'PATCH';
@@ -24,8 +26,7 @@ const FetchEx = async ( url: string, options?: Options ) => {
     logger.error({ stack: err.stack });
     const { status } = err.response;
     const { resultCode, resultMessage } = err.response.data;
-    const newError = { status, resultCode, resultMessage };
-    throw newError;
+    throw new ErrorException( new ExceptionAttribute( status, resultCode, resultMessage ) );
   }
 };
 

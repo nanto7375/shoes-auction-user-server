@@ -11,6 +11,10 @@ const router = Router();
 router.get( '/users/:userUuid', responseWrapper( async ( req: Request, res: Response ) => {
   const { userUuid } = req.params;
   
+  if ( !userUuid ) {
+    throw new ErrorException( badData );
+  }
+
   console.log( userUuid );
   resSuccess( res, { result: userUuid });
 }) );

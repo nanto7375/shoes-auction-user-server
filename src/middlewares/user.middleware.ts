@@ -1,13 +1,8 @@
 import ErrorException from '../exceptions/form.exception';
 import { badData } from '../exceptions/definition.exception';
+
+import { removeEmptySpace, isEmail } from '../utils/stringUtil';
 import { generateHashPassword } from '../utils/hash';
-
-const removeEmptySpace = ( str = '' ) => str.replace( / /g,"" );
-
-const isEmail = ( email ) => {
-  const regexEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-  return email.match( regexEmail ); 
-};
 
 export const joinValidation = ( req, res, next ) => {
   Object.keys( req.body ).forEach( key => {

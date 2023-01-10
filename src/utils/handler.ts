@@ -22,12 +22,3 @@ export const responseWrapper = ( func ) => async ( req: Request, res: Response, 
     next( error );
   }
 };
-
-export const middleWareWrapper = ( func ) => async ( req: Request, res: Response, next: NextFunction ) => {
-  try {
-    await func();
-    next();
-  } catch ( error ) {
-    next( error );
-  }
-};

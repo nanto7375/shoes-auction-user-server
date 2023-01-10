@@ -4,13 +4,13 @@ import { isCelebrateError } from 'celebrate';
 
 import envConfig from './config/env.config';
 import logger from './config/log.config';
-import router from './routes/index.route';
+import router from './routes';
 
 import { resError } from './utils/handler';
 import ErrorException from './exceptions/form.exception';
 import { notFoundRoute, badData } from './exceptions/definition.exception';
 
-import { checkDbConnection } from './models/index.model';
+import { checkDbConnection } from './models';
 
 const app: express.Application = express();
 

@@ -11,15 +11,14 @@ const schemaValidator = function ( schema ) {
 class User extends Model {
   public id!: number;
   public uuid!: string;
-  public storeId!: number;
-  public status!: 'CLOSED' | 'OPEN' | 'PAUSE';
-  public pushToken!: string;
-  public deliveryArea!: Array<number>;
-  public unpauseDate!: Date;
+  public userId!: string;
+  public password!: string;
+  public email!: string;
+  public isLogin!: boolean;
+  public isBanned!: boolean;
   public readonly createdAt?: Date;
   public readonly updatedAt?: Date;
   public readonly deletedAt?: Date;
-  public store?: Record<string, any>;
 }
 
 type UserStatic = typeof Model & {
@@ -36,47 +35,39 @@ const UserFactory = ( sequelize : Sequelize ): UserStatic => {
       allowNull: false,
     },
     uuid: {
-      comment: '매점 uuid',
+      comment: '유저 uuid',
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    storeId: {
-      type: DataTypes.INTEGER, 
+    userId: {
+      type: DataTypes.STRING, 
       unique: true, 
+      comment: '유저 id',
+      notNull: true,
     },
-    status: {
-      comment: '매점 운영 정보',
-      type: DataTypes.ENUM( 'OPEN', 'CLOSED', 'PAUSE' ),
-      defaultValue: 'CLOSED',
+    password: {
+      comment: '비밀번호',
+      type: DataTypes.STRING,
+      notNull: true,
     },
-    pushToken: {
-      comment: '푸시 토근',
-      type: DataTypes.STRING( 255 ),
+    email: {
+      comment: '유저 mail',
+      type: DataTypes.STRING,
+      notNull: true,
     },
-    deliveryArea: {
-      comment: '배달 가능 지역',
-      type: DataTypes.JSON,
-      validate: {
-        schema: schemaValidator({
-          type: 'array',
-          properties: 'number',
-        }),
-      },
-      defaultValue: [],
-      get() {
-        const originDeliveryArea = this.getDataValue( 'deliveryArea' );
-        if( typeof originDeliveryArea === 'string' ){
-          return JSON.parse( originDeliveryArea );
-        }
-        return originDeliveryArea;
-      },
+    isLogin: {
+      comment: '로그인 유무',
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
-    unpauseDate: {
-      comment: '매점 재개 시간',
-      type: DataTypes.DATE, 
+    isBanned: {
+      comment: '차단 여부',
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   };
+  
   const User = <UserStatic>sequelize.define( 'users', attributes, { 
     paranoid: true, 
     underscored: true, 

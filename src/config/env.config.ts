@@ -21,6 +21,8 @@ const envConfig = {
   userServer: process.env.USER_SERVER_ADDRESS,
   productServer: process.env.PRODCUT_SERVER_ADDRESS,
   logServer: process.env.LOG_SERVER_ADDRESS,
+
+  passwordSalt: process.env.PASSWORD_SALT,
   
   // mq
   // mqServerAddress: process.env.MQ_SERVER_ADDRESS,

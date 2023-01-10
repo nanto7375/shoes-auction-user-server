@@ -1,34 +1,43 @@
+import { Request, Response, NextFunction } from 'express';
 import ErrorException from '../exceptions/form.exception';
 import { badData } from '../exceptions/definition.exception';
 
 import { removeEmptySpace, isEmail } from '../utils/stringUtil';
 import { generateHashPassword } from '../utils/hash';
 
-export const joinValidation = ( req, res, next ) => {
-  const { userId, password, email } = req.body;
+const removeAllEmptySpace = ( obj: Record<string, string> ): Record<string, string> => {
+  const copiedObj = { ...obj };
 
-  if ( !userId.trim() || !password.trim() || !email.trim() ) {
-    throw new ErrorException( badData );
-  }
-  if ([ userId, password, email ].some( elem => typeof elem !== 'string' ) || !isEmail( email ) ) {
-    throw new ErrorException( badData );
-  }
-
-  Object.keys( req.body ).forEach( key => {
-    if ( key !== 'userId' && key !== 'password' && key !== 'email' ) {
-      return;
-    }
-    req.body[key] = removeEmptySpace( req.body[key]);
+  Object.keys( copiedObj ).forEach( key => {
+    copiedObj[key] = removeEmptySpace( copiedObj[key]);
   });
+
+  return copiedObj;
+};
+
+export const joinValidation = ({ body }: Request, res: Response, next: NextFunction ) => {
+  const { userId, password, email } = body;
+
+  [ userId, password, email ].forEach( elem => {
+    if ( typeof elem !== 'string' || !elem.trim() ) {
+      throw new ErrorException( badData );
+    }
+  });
+
+  if ( !isEmail( email ) ) {
+    throw new ErrorException( badData );
+  }
+
+  body = removeAllEmptySpace({ userId, password, email });
 
   next();
 };
 
-export const hashPassword = ( req, res, next ) => {
-  const { password } = req.body;
+export const hashPassword = ({ body }: Request, res: Response, next: NextFunction ) => {
+  const { password } = body;
 
-  req.body.hashedPassword = generateHashPassword( password );
-  delete req.body.password;
+  body.hashedPassword = generateHashPassword( password );
+  delete body.password;
 
   next();
 };

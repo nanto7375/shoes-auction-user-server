@@ -11,7 +11,7 @@ import { UserMiddleware } from '../middlewares';
 const router = Router();
 
 /**회원가입
- * req.body - userId: string, hashedPassword: string, email: string */
+ * req.body type { userId: string; hashedPassword: string; email: string; }*/
 router.post( '/users', UserMiddleware.joinValidation, UserMiddleware.hashPassword, responseWrapper( async ( req: Request, res: Response ) => {
   const { userId, hashedPassword, email } = req.body;
 

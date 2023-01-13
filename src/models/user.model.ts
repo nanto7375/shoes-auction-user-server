@@ -66,6 +66,7 @@ const UserFactory = ( sequelize : Sequelize ): UserStatic => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    
   };
   
   const User = <UserStatic>sequelize.define( 'users', attributes, { 

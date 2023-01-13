@@ -14,3 +14,11 @@ export const findUserByUuid = async ( uuid: string ) => {
 
   return user;
 };
+
+export const isExistUser = async ( userId :string, email :string ) => {
+  console.log( "userId", "email" , "isError?" );
+  const userUuid = await User.findOne({ attributes: [ 'uuid' ], where: { userId, email } });
+  console.log( "에러아님" );
+  
+  return userUuid;
+};

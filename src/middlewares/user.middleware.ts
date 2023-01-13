@@ -38,9 +38,6 @@ export const joinValidation = ( req: Request, res: Response, next: NextFunction 
 
 export const hashPassword = ( req: Request, res: Response, next: NextFunction ) => {
   const { password } = req.body;
-
-  req.body.hashedPassword = generateHashPassword( password );
-  delete req.body.password;
-
+  req.body.password = generateHashPassword( password );
   next();
 };

@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   command: "app.ts"
+  #   ports:
+  #     - 5000:5000
+  #   volumes:
+  #     - .:/app
+  #   depends_on:
+  #     - user-db
+
+  user-db:
+    image: mysql:5.7.22
+    restart: always
+    environment:
+      MYSQL_DATABASE: admin
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin
+    volumes:
+      - .dbdata:/var/lib/mysql
+      # - ./my.cnf:/etc/mysql/conf.d/my.cnf
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+    ports:
+      - 33079:3306

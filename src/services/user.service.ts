@@ -14,3 +14,9 @@ export const isExistUser = async ( userId  , email  ) => {
   
   return isExistUser;
 };
+
+export const updatePassword = async ( userId, email, tempPassword ) => {
+  const user = await UserRepository.updatePassword( userId, email, tempPassword );
+
+  return user;
+};

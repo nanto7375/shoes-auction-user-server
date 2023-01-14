@@ -39,7 +39,7 @@ router.get( '/users/test', responseWrapper( async ( req: Request, res: Response 
 }) );
 
 /**
- * 비밀번호 찾기 - 회원검증
+ * 비밀번호 찾기 - 임시비밀번호 발급
  * req.query ?userId=uuid&email=email
 */
 router.get( '/find-password' ,responseWrapper( async ( req: Request, res: Response ) => {
@@ -50,8 +50,16 @@ router.get( '/find-password' ,responseWrapper( async ( req: Request, res: Respon
   }
 
   const isExistUser = await UserService.isExistUser( userId , email );
+  let tempPassword = '';
 
-  resSuccess( res, { result: isExistUser });
+  if ( isExistUser === true ){
+    tempPassword = Array( 10 ).fill( null ).map( () => Math.round( Math.random() * 10 ) ).join( '' ); 
+    await UserService.updatePassword( userId, email, tempPassword );
+  }
+
+  resSuccess( res, { isExistUser: isExistUser , tempPassword : tempPassword });
 }) );
+
+
 
 export default router;

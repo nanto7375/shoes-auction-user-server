@@ -34,4 +34,4 @@ typings/
 src/test.mjs
 
 # db
-.dbdata/*
+.dbdata/

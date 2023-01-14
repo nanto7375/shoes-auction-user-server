@@ -36,6 +36,7 @@ export const joinValidation = ( req: Request, res: Response, next: NextFunction 
   next();
 };
 
+// 비밀번호 암호화
 export const hashPassword = ( req: Request, res: Response, next: NextFunction ) => {
   const { password } = req.body;
   req.body.password = generateHashPassword( password );

@@ -32,3 +32,6 @@ typings/
 .cache
 
 src/test.mjs
+
+# db
+.dbdata/*

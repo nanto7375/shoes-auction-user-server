@@ -27,15 +27,12 @@ router.get( '/users/:userUuid', responseWrapper( async ( req: Request, res: Resp
     throw new ErrorException( badData );
   }
 
-  console.log( userUuid );
   resSuccess( res, { result: userUuid });
 }) );
 
 /**test */
 router.get( '/users/test', responseWrapper( async ( req: Request, res: Response ) => {
-  console.log( "tttttt" );
   const test  = req.params;
-  
 
   console.log( test );
   resSuccess( res, { result: test });

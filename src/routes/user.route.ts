@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 // import { Joi, Segments, celebrate } from 'celebrate';
 
 import ErrorException from '../exceptions/form.exception';
-import { badData } from '../exceptions/definition.exception';
+import { badData, badRequest } from '../exceptions/definition.exception';
 import { resSuccess, responseWrapper } from '../utils/handler';
 
 import { UserService } from '../services';
@@ -52,9 +52,11 @@ router.get( '/find-password' ,responseWrapper( async ( req: Request, res: Respon
   const isExistUser = await UserService.isExistUser( userId , email );
   let tempPassword = '';
 
-  if ( isExistUser === true ){
+  if ( isExistUser ){
     tempPassword = Array( 10 ).fill( null ).map( () => Math.round( Math.random() * 10 ) ).join( '' ); 
     await UserService.updatePassword( userId, email, tempPassword );
+  } else {
+    throw new ErrorException( badRequest );
   }
 
   resSuccess( res, { isExistUser: isExistUser , tempPassword : tempPassword });

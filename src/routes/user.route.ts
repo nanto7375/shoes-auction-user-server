@@ -44,7 +44,6 @@ router.get( '/find-password' ,responseWrapper( async ( req: Request, res: Respon
   }
 
   const isExistUser = await UserService.isExistUser( userId as string, email as string );
-
   if ( !isExistUser ) {
     throw new ErrorException( badRequest );
   }
@@ -52,7 +51,7 @@ router.get( '/find-password' ,responseWrapper( async ( req: Request, res: Respon
   const tempPassword = Array( 10 ).fill( null ).map( () => Math.round( Math.random() * 10 ) ).join( '' ); 
   await UserService.updatePassword({ userId, email, tempPassword });
   
-  resSuccess( res, { tempPassword : tempPassword });
+  resSuccess( res, { tempPassword });
 }) );
 
 export default router;

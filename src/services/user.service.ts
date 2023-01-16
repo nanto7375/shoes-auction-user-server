@@ -14,7 +14,7 @@ export const isExistUser = async ( userId: string  , email: string  ): Promise<b
 };
 
 export const updatePassword = async ({ userId, email, tempPassword }) => {
-  const user = await UserRepository.updatePassword({ tempPassword }, { where: { userId, email } });
+  const result = await UserRepository.updatePassword({ tempPassword }, { where: { userId, email } });
 
-  return user;
+  return result;
 };

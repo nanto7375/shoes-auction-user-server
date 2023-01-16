@@ -21,6 +21,6 @@ export const isExistUser = async ( userId :string, email :string ) => {
   return userUuid;
 };
 
-export const updatePassword = async ( userId :string, email :string, tempPassword :string ) => {
-  await User.update({ password:tempPassword }, { where: { userId, email } });
+export const updatePassword = async ( body: Record<string, unknown>, { where }) => {
+  await User.update( body, { where });
 };

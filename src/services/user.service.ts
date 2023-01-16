@@ -6,17 +6,15 @@ export const register = async ({ userId, password, email }) => {
   return user;
 };
 
-export const isExistUser = async ( userId  , email  ) => {
-  let isExistUser = true;
+export const isExistUser = async ( userId: string  , email: string  ): Promise<boolean> => {
 
   const userUuid = await UserRepository.isExistUser( userId, email );
-  if( userUuid == null ) isExistUser = false;
   
-  return isExistUser;
+  return !!userUuid;
 };
 
-export const updatePassword = async ( userId, email, tempPassword ) => {
-  const user = await UserRepository.updatePassword( userId, email, tempPassword );
+export const updatePassword = async ({ userId, email, tempPassword }) => {
+  const user = await UserRepository.updatePassword({ tempPassword }, { where: { userId, email } });
 
   return user;
 };

@@ -39,7 +39,7 @@ router.get( '/users/test', responseWrapper( async ( req: Request, res: Response 
 }) );
 
 /**
- * 비밀번호 찾기 - 임시비밀번호 발급
+ * 비밀번호 찾기 - 임시비밀번호 발급 
  * req.query ?userId=uuid&email=email
 */
 router.get( '/find-password' ,responseWrapper( async ( req: Request, res: Response ) => {
@@ -49,17 +49,16 @@ router.get( '/find-password' ,responseWrapper( async ( req: Request, res: Respon
     throw new ErrorException( badData );
   }
 
-  const isExistUser = await UserService.isExistUser( userId , email );
-  let tempPassword = '';
+  const isExistUser = await UserService.isExistUser( userId as string, email as string );
 
-  if ( isExistUser ){
-    tempPassword = Array( 10 ).fill( null ).map( () => Math.round( Math.random() * 10 ) ).join( '' ); 
-    await UserService.updatePassword( userId, email, tempPassword );
-  } else {
+  if ( !isExistUser ) {
     throw new ErrorException( badRequest );
   }
 
-  resSuccess( res, { isExistUser: isExistUser , tempPassword : tempPassword });
+  const tempPassword = Array( 10 ).fill( null ).map( () => Math.round( Math.random() * 10 ) ).join( '' ); 
+  await UserService.updatePassword({ userId, email, tempPassword });
+  
+  resSuccess( res, { tempPassword : tempPassword });
 }) );
 
 

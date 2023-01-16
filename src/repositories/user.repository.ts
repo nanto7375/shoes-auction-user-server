@@ -14,3 +14,13 @@ export const findUserByUuid = async ( uuid: string ) => {
 
   return user;
 };
+
+export const isExistUser = async ( userId :string, email :string ) => {
+  const userUuid = await User.findOne({ attributes: [ 'uuid' ], where: { userId, email } });
+  
+  return userUuid;
+};
+
+export const updatePassword = async ( body: Record<string, unknown>, { where }) => {
+  await User.update( body, { where });
+};

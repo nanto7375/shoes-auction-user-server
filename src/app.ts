@@ -39,6 +39,11 @@ app.use( ({ hostname, ip, method, url, headers, body }: Request, res: Response, 
   next();
 });
 
+// health check end point
+app.use( '/actuator/health', ( req: Request, res: Response ) => {
+  res.send({ resultCode: 0, resultMessage: 'OK' }); 
+});
+
 // service router
 app.use( router );
 

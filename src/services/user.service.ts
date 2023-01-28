@@ -1,4 +1,5 @@
 import { UserRepository } from '../repositories';
+import AuthServer from '../server/authServer';
 
 export const register = async ({ userId, password, email }) => {
   const user = await UserRepository.register({ userId, password, email });
@@ -17,4 +18,10 @@ export const updatePassword = async ({ userId, email, tempPassword }) => {
   const result = await UserRepository.updatePassword({ tempPassword }, { where: { userId, email } });
 
   return result;
+};
+
+export const getJwtTokens = async({ userId, role }) => {
+  const tokens = await AuthServer.getTokens({ userId, role });
+
+  return tokens;
 };

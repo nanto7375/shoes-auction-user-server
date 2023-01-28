@@ -20,6 +20,21 @@ router.post( '/users', UserMiddleware.joinValidation, UserMiddleware.hashPasswor
   resSuccess( res, { result: user });
 }) );
 
+/**
+ * 로그인
+ */
+router.post( '/users/login', UserMiddleware.hashPassword, responseWrapper( async ( req: Request, res: Response ) => {
+  const { userId, password } = req.body;
+
+  // password 매칭
+  
+  const role = 'amdin';
+
+  const { accessToken, refreshToken } = await UserService.getJwtTokens({ userId, role });
+  
+  resSuccess( res, { userId, role, accessToken, refreshToken });
+}) );
+
 /**test */
 router.get( '/users/:userUuid', responseWrapper( async ( req: Request, res: Response ) => {
   const { userUuid } = req.params;

@@ -15,6 +15,11 @@ export const findUserByUuid = async ( uuid: string ) => {
   return user;
 };
 
+export const findPasswordAndRoleByUserId = async ( body: Record<string, unknown> ) => {
+  const user = await User.findOne({ attributes: [ 'password', 'role' ], where: body });
+  return user;
+};
+
 export const isExistUser = async ( userId :string, email :string ) => {
   const userUuid = await User.findOne({ attributes: [ 'uuid' ], where: { userId, email } });
   

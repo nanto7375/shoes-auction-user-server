@@ -14,14 +14,19 @@ export const isExistUser = async ( userId: string  , email: string  ): Promise<b
   return !!userUuid;
 };
 
+export const findPasswordAndRoleByUserId = async ({ userId }) => {
+  const user = await UserRepository.findPasswordAndRoleByUserId({ userId });
+  return user;
+};
+
 export const updatePassword = async ({ userId, email, tempPassword }) => {
   const result = await UserRepository.updatePassword({ tempPassword }, { where: { userId, email } });
 
   return result;
 };
 
+// auth-server에서 토큰받아오기
 export const getJwtTokens = async({ userId, role }) => {
   const tokens = await AuthServer.getTokens({ userId, role });
-
   return tokens;
 };

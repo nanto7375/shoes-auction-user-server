@@ -13,6 +13,7 @@ class User extends Model {
   public uuid!: string;
   public userId!: string;
   public password!: string;
+  public role!: string;
   public email!: string;
   public isLogin!: boolean;
   public isBanned!: boolean;
@@ -50,6 +51,11 @@ const UserFactory = ( sequelize : Sequelize ): UserStatic => {
       comment: '비밀번호',
       type: DataTypes.STRING,
       notNull: true,
+    },
+    role: {
+      comment: '역할',
+      type: DataTypes.STRING,
+      defaultValue: 'user',
     },
     email: {
       comment: '유저 mail',

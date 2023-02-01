@@ -1,5 +1,5 @@
 import FetchEx from './data';
-import envConfig from 'src/config/env.config';
+import envConfig from '../config/env.config';
 
 const { authServer } = envConfig;
 

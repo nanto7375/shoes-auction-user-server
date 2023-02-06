@@ -32,7 +32,7 @@ router.post( '/users/login', responseWrapper( async ( req: Request, res: Respons
 
   // password 매칭
   // ! 함수명만으로 함수 매개변수가 파악이 되는 경우에는 굳이 구조분해할당 형식으로 인수 넣지 않아도 됨!
-  // ! findPasswordAndRoleByUserId 같은 경우 userId 값을 매개변수로 받겠구나가 짐작되니까 말이지^ㅡ^
+  // ! findPasswordAndRoleByUserId 같은 경우, userId 값을 매개변수로 받겠구나가 짐작되니까 말이지^ㅡ^
   // ! 그리고 findUser의 경우와 같이 객체 그 자체가 아니라 객체의 속성만 사용할 경우에는, 구조분해할당으로 함수 값을 리턴 받으면 사용하기 편함.
   // ! findUser -> {role, password} 이런 식으로!
   // ! 지금은 password가 req.body에서도 구조분해할당으로 받았으니까

@@ -15,8 +15,8 @@ export const findUserByUuid = async ( uuid: string ) => {
   return user;
 };
 
-export const findPasswordAndRoleByUserId = async ( body: Record<string, unknown> ) => {
-  const user = await User.findOne({ attributes: [ 'password', 'role' ], where: body });
+export const findOneByUserId = async ( userId: string ) => {
+  const user = await User.findOne({   where: { userId } });
   return user;
 };
 

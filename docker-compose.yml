@@ -1,19 +1,9 @@
 version: "3.8"
 services:
-  # backend:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   command: "npm run watch"
-  #   ports:
-  #     - 3001:3001
-  #   volumes:
-  #     - .:/app
-  #   depends_on:
-  #     - user-db
 
   user-db:
-    image: mysql:5.7.22
+    image: mysql:5.7
+    platform: linux/amd64
     restart: always
     environment:
       MYSQL_DATABASE: admin
@@ -34,27 +24,3 @@ services:
       options:
         max-size: "8m"
         max-file: "10"
-    
-#   grafana:
-#     depends_on:
-#     - user-db
-#     image: grafana/grafana:8.2.2
-#     restart: unless-stopped
-#     environment:
-#       GF_INSTALL_PLUGINS: grafana-clock-panel
-#     ports:
-#     - 3000:3000
-#     links:
-#       - user-db
-#     volumes:
-#     - ./files/grafana.ini:/etc/grafana/grafana.ini:ro
-#     - grafana-data:/var/lib/grafana
-#     logging:
-#       driver: "json-file"
-#       options:
-#         max-size: "8m"
-#         max-file: "10"
-        
-# volumes:
-#   mysql-data: {}
-#   grafana-data: {}

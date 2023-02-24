@@ -35,3 +35,4 @@ src/test.mjs
 
 # docker
 .dbdata
+.appdata

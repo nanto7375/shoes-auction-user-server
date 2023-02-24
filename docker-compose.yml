@@ -6,10 +6,10 @@ services:
     platform: linux/amd64
     restart: always
     environment:
-      MYSQL_DATABASE: admin
+      MYSQL_DATABASE: user
       MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
-      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: 1234
     volumes:
       - .dbdata:/var/lib/mysql
       # - ./my.cnf:/etc/mysql/conf.d/my.cnf

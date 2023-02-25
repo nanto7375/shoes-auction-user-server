@@ -10,7 +10,7 @@ export const createFail = new ExceptionAttribute( 400, 10008, 'Create fail' );
 export const deleteFail = new ExceptionAttribute( 400, 10009, 'Delete fail' );
 export const alreadyRegisterd = new ExceptionAttribute( 400, 10010, 'Already registerd' );
 
-export const notFoundData = new ExceptionAttribute( 400, 10100, 'Empty Data' );
+export const notFoundData = new ExceptionAttribute( 400, 10050, 'Empty Data' );
 
 // 401
 export const unAuthorized = new ExceptionAttribute( 401, 10100, 'Have no authorization' );

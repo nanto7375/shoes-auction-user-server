@@ -6,6 +6,12 @@ export const register = async ({ userId, password, email }) => {
   return user;
 };
 
+export const getUserByUserId = async ( userId: string ): Promise<Record<string, any>> => {
+  const user = await UserRepository.findOneByUserId( userId );
+
+  return user;
+};
+
 export const isExistUser = async ( userId: string  , email: string  ): Promise<boolean> => {
   const userUuid = await UserRepository.isExistUser( userId, email );
   

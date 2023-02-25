@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 // import { Joi, Segments, celebrate } from 'celebrate';
 
 import ErrorException from '../exceptions/form.exception';
-import { badData, badRequest } from '../exceptions/definition.exception';
+import { badData, badRequest, alreadyRegisterd } from '../exceptions/definition.exception';
 import { resSuccess, responseWrapper } from '../utils/handler';
 import { checkPassword } from '../utils/hash';
 import { UserService } from '../services';
@@ -14,6 +14,11 @@ const router = Router();
  * req.body type { userId: string; hashedPassword: string; email: string; }*/
 router.post( '/users', UserMiddleware.joinValidation, UserMiddleware.hashPassword, responseWrapper( async ( req: Request, res: Response ) => {
   const { userId, password, email } = req.body;
+  
+  const userInDb = await UserService.getUserByUserId( userId );
+  if ( userInDb ) {
+    throw new ErrorException( alreadyRegisterd );
+  }
 
   const user = await UserService.register({ userId, password, email });
   

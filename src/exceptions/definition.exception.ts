@@ -8,6 +8,8 @@ export const upsertFail = new ExceptionAttribute( 400, 80006, 'Upsert fail' );
 export const updateFail = new ExceptionAttribute( 400, 80007, 'Update fail' );
 export const createFail = new ExceptionAttribute( 400, 80008, 'Create fail' );
 export const deleteFail = new ExceptionAttribute( 400, 80009, 'Delete fail' );
+export const alreadyRegisterd = new ExceptionAttribute( 400, 80010, 'Already registerd' );
+
 export const notFoundData = new ExceptionAttribute( 400, 80100, 'Empty Data' );
 
 // 401

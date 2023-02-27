@@ -42,7 +42,12 @@ router.post( '/users/login', responseWrapper( async ( req: Request, res: Respons
   // ! findUser -> {role, password} 이런 식으로!
   // ! 지금은 password가 req.body에서도 구조분해할당으로 받았으니까
   // ! {role, password: dbPassword} 이런 식으로 해서 사용하면 됨.
-  const { role, password: dbPassword, uuid: userUuid }  = await UserService.findPasswordAndRoleByUserId( userId );
+  const user  = await UserService.findPasswordAndRoleByUserId( userId );
+  if ( !user ) {
+    throw new ErrorException( badRequest );
+  }
+  
+  const { role, password: dbPassword, uuid: userUuid } = user;
   const isValidUser = await checkPassword( password, dbPassword );
   console.log( "isValidUser : ", isValidUser );
 

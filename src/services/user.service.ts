@@ -19,9 +19,9 @@ export const isExistUser = async ( userId: string  , email: string  ): Promise<b
 };
 
 export const findPasswordAndRoleByUserId = async ( userId ) => {
-  const { password, role, uuid } = await UserRepository.findOneByUserId( userId );
+  const user = await UserRepository.findOneByUserId( userId );
 
-  return { password, role, uuid };
+  return user;
 };
 
 export const updatePassword = async ({ userId, email, tempPassword }) => {

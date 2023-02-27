@@ -19,9 +19,9 @@ export const isExistUser = async ( userId: string  , email: string  ): Promise<b
 };
 
 export const findPasswordAndRoleByUserId = async ( userId ) => {
-  const { password, role } = await UserRepository.findOneByUserId( userId );
+  const { password, role, uuid } = await UserRepository.findOneByUserId( userId );
 
-  return { password, role };
+  return { password, role, uuid };
 };
 
 export const updatePassword = async ({ userId, email, tempPassword }) => {
@@ -31,8 +31,8 @@ export const updatePassword = async ({ userId, email, tempPassword }) => {
 };
 
 // auth-server에서 토큰받아오기
-export const getJwtTokens = async({ userId, role }) => {
-  const tokens = await AuthServer.getTokens({ userId, role });
+export const getJwtTokens = async({ userUuid, role }) => {
+  const tokens = await AuthServer.getTokens({ userUuid, role });
 
   return tokens;
 };

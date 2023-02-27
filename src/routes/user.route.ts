@@ -42,7 +42,7 @@ router.post( '/users/login', responseWrapper( async ( req: Request, res: Respons
   // ! findUser -> {role, password} 이런 식으로!
   // ! 지금은 password가 req.body에서도 구조분해할당으로 받았으니까
   // ! {role, password: dbPassword} 이런 식으로 해서 사용하면 됨.
-  const { role, password: dbPassword }  = await UserService.findPasswordAndRoleByUserId( userId );
+  const { role, password: dbPassword, uuid: userUuid }  = await UserService.findPasswordAndRoleByUserId( userId );
   const isValidUser = await checkPassword( password, dbPassword );
   console.log( "isValidUser : ", isValidUser );
 
@@ -50,7 +50,7 @@ router.post( '/users/login', responseWrapper( async ( req: Request, res: Respons
     throw new ErrorException( badData );
   }
   
-  const { accessToken, refreshToken } = await UserService.getJwtTokens({ userId, role });
+  const { accessToken, refreshToken } = await UserService.getJwtTokens({ userUuid, role });
   console.log( "accessToken, refreshToken", accessToken, refreshToken );
 
   resSuccess( res, { userId, role ,accessToken, refreshToken }); // userId, role ,accessToken, refreshToken

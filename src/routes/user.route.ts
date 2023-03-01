@@ -4,17 +4,17 @@ import { Router, Request, Response } from 'express';
 import ErrorException from '../exceptions/form.exception';
 import { badData, badRequest, alreadyRegisterd } from '../exceptions/definition.exception';
 import { resSuccess, responseWrapper } from '../utils/handler';
-import { checkPassword } from '../utils/hash';
+import { checkPassword, hashPassword } from '../utils/hash';
 import { UserService } from '../services';
 import { UserMiddleware } from '../middlewares';
 
 
 const router = Router();
-const { validateJoinBody, hashPassword } = UserMiddleware;
+const { validateJoinBody } = UserMiddleware;
 
 /**회원가입
  * req.body type { userId: string; hashedPassword: string; email: string; }*/
-router.post( '/users', validateJoinBody, hashPassword, responseWrapper( async ( req: Request, res: Response ) => {
+router.post( '/users', validateJoinBody, responseWrapper( async ( req: Request, res: Response ) => {
   const { userId, password, email } = req.body;
   
   const userInDb = await UserService.getUserByUserId( userId );
@@ -22,7 +22,8 @@ router.post( '/users', validateJoinBody, hashPassword, responseWrapper( async ( 
     throw new ErrorException( alreadyRegisterd );
   }
 
-  const user = await UserService.register({ userId, password, email });
+  const hashedPassword = hashPassword( password );
+  const user = await UserService.register({ userId, password: hashedPassword, email });
   
   resSuccess( res, { result: user });
 }) );

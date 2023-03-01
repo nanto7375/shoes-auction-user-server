@@ -3,7 +3,6 @@ import ErrorException from '../exceptions/form.exception';
 import { badData } from '../exceptions/definition.exception';
 
 import { removeBlank, isEmail } from '../utils/stringUtil';
-import { generateHashPassword } from '../utils/hash';
 
 const removeAllBlank = ( obj: Record<string, string> ): Record<string, string> => {
   const copiedObj = { ...obj };
@@ -33,11 +32,5 @@ export const validateJoinBody = ( req: Request, res: Response, next: NextFunctio
   // 띄어쓰기 제거
   req.body = removeAllBlank({ userId, password, email });
 
-  next();
-};
-
-export const hashPassword = ( req: Request, res: Response, next: NextFunction ) => {
-  const { password } = req.body;
-  req.body.password = generateHashPassword( password );
   next();
 };

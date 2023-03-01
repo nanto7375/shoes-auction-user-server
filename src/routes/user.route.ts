@@ -88,7 +88,7 @@ router.get( '/find-password' ,responseWrapper( async ( req: Request, res: Respon
     throw new ErrorException( badData );
   }
 
-  const isExistUser = await UserService.isExistUser( userId as string, email as string );
+  const isExistUser = await UserService.isExistUser({ userId: userId as string, email: email as string });
   if ( !isExistUser ) {
     throw new ErrorException( badRequest );
   }

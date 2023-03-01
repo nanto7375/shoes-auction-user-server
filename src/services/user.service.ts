@@ -12,8 +12,8 @@ export const getUserByUserId = async ( userId: string ): Promise<Record<string, 
   return user;
 };
 
-export const isExistUser = async ( userId: string  , email: string  ): Promise<boolean> => {
-  const userUuid = await UserRepository.isExistUser( userId, email );
+export const isExistUser = async ({ userId, email }: {userId: string; email: string;}): Promise<boolean> => {
+  const userUuid = await UserRepository.isExistUser({ userId, email });
   
   return !!userUuid;
 };

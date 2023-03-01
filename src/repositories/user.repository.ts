@@ -20,7 +20,7 @@ export const findByUserId = async ( userId: string ) => {
   return user;
 };
 
-export const isExistUser = async ( userId :string, email :string ) => {
+export const isExistUser = async ({ userId, email }: {userId: string; email: string}) => {
   const userUuid = await User.findOne({ attributes: [ 'uuid' ], where: { userId, email } });
   
   return userUuid;

@@ -7,6 +7,7 @@ import { resSuccess, responseWrapper } from '../utils/handler';
 import { checkPassword, hashPassword } from '../utils/hash';
 import { UserService } from '../services';
 import { UserMiddleware } from '../middlewares';
+import { makeTempPassword } from '../utils/stringUtil';
 
 
 const router = Router();
@@ -44,14 +45,14 @@ router.post( '/users/login', responseWrapper( async ( req: Request, res: Respons
   // ! 그리고 findUser의 경우와 같이 객체 그 자체가 아니라 객체의 속성만 사용할 경우에는, 구조분해할당으로 함수 값을 리턴 받으면 사용하기 편함.
   // ! findUser -> {role, password} 이런 식으로!
   // ! 지금은 password가 req.body에서도 구조분해할당으로 받았으니까
-  // ! {role, password: dbPassword} 이런 식으로 해서 사용하면 됨.
+  // ! {role, password: passwordInDb} 이런 식으로 해서 사용하면 됨.
   const user  = await UserService.getUserByUserId( userId );
   if ( !user ) {
     throw new ErrorException( badRequest );
   }
 
-  const { role, password: dbPassword, uuid: userUuid } = user;
-  const isValidUser = await checkPassword( password, dbPassword );
+  const { role, password: passwordInDb, uuid: userUuid } = user;
+  const isValidUser = await checkPassword( password, passwordInDb );
   console.log( "isValidUser : ", isValidUser );
 
   if ( !isValidUser ) {
@@ -61,7 +62,7 @@ router.post( '/users/login', responseWrapper( async ( req: Request, res: Respons
   const { accessToken, refreshToken } = await UserService.getJwtTokens({ userUuid, role });
   console.log( "accessToken, refreshToken", accessToken, refreshToken );
 
-  resSuccess( res, { userId, role ,accessToken, refreshToken }); // userId, role ,accessToken, refreshToken
+  resSuccess( res, { userId, role ,accessToken, refreshToken });
 }) );
 
 /**test */
@@ -78,7 +79,7 @@ router.get( '/users/:userUuid', responseWrapper( async ( req: Request, res: Resp
 
 /**
  * 비밀번호 찾기 - 임시비밀번호 발급 
- * req.query ?userId=uuid&email=email
+ * req.query ?userId=userId&email=email
 */
 router.get( '/find-password' ,responseWrapper( async ( req: Request, res: Response ) => {
   const{ userId, email }  = req.query;
@@ -92,7 +93,7 @@ router.get( '/find-password' ,responseWrapper( async ( req: Request, res: Respon
     throw new ErrorException( badRequest );
   }
 
-  const tempPassword = Array( 10 ).fill( null ).map( () => Math.round( Math.random() * 10 ) ).join( '' ); 
+  const tempPassword = makeTempPassword(); 
   await UserService.updatePassword({ userId, email, tempPassword });
   
   resSuccess( res, { tempPassword });

@@ -15,7 +15,7 @@ export const findUserByUuid = async ( uuid: string ) => {
   return user;
 };
 
-export const findOneByUserId = async ( userId: string ) => {
+export const findByUserId = async ( userId: string ) => {
   const user = await User.findOne({ where: { userId } });
   return user;
 };

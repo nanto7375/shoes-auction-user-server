@@ -7,7 +7,7 @@ export const register = async ({ userId, password, email }) => {
 };
 
 export const getUserByUserId = async ( userId: string ): Promise<Record<string, any>> => {
-  const user = await UserRepository.findOneByUserId( userId );
+  const user = await UserRepository.findByUserId( userId );
 
   return user;
 };

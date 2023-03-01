@@ -15,7 +15,7 @@ const removeAllBlank = ( obj: Record<string, string> ): Record<string, string> =
   return copiedObj;
 };
 
-export const joinValidation = ( req: Request, res: Response, next: NextFunction ) => {
+export const validateJoinBody = ( req: Request, res: Response, next: NextFunction ) => {
   const { userId, password, email } = req.body;
 
   // type 및 값 유무 체크

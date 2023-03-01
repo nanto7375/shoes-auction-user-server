@@ -8,11 +8,13 @@ import { checkPassword } from '../utils/hash';
 import { UserService } from '../services';
 import { UserMiddleware } from '../middlewares';
 
+
 const router = Router();
+const { validateJoinBody, hashPassword } = UserMiddleware;
 
 /**회원가입
  * req.body type { userId: string; hashedPassword: string; email: string; }*/
-router.post( '/users', UserMiddleware.joinValidation, UserMiddleware.hashPassword, responseWrapper( async ( req: Request, res: Response ) => {
+router.post( '/users', validateJoinBody, hashPassword, responseWrapper( async ( req: Request, res: Response ) => {
   const { userId, password, email } = req.body;
   
   const userInDb = await UserService.getUserByUserId( userId );
